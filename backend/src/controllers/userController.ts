@@ -6,7 +6,7 @@ import { Types } from 'mongoose';
 
 const getUserToken = (_id: string | Types.ObjectId): string => {
     const token = jwt.sign({ _id }, process.env.JWT_SECRET as string, {
-        expiresIn: '30d',
+        expiresIn: '28d',
     });
     return token;
 };
