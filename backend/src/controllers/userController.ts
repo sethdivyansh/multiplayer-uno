@@ -32,6 +32,7 @@ const registerUser: ControllerFunction = catchError(
         const user = await User.create({
             username,
             password,
+            activeGameId: null,
         });
 
         const createdUser = await User.findById(user._id).select('-password');
@@ -82,8 +83,6 @@ const loginUser: ControllerFunction = catchError(
 const verifyUser: ControllerFunction = catchError(
     async (req: AuthRequest, res: Response): Promise<void> => {
         const user = req.user as IUser;
-        req.user.activeGameId = null;
-        await req.user.save();
         res.status(200).json({ user });
     }
 );

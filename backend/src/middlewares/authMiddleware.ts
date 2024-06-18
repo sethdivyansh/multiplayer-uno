@@ -22,7 +22,9 @@ export const verifyToken = async (
             process.env.JWT_SECRET as string
         ) as { _id: string };
 
-        const user: IUser | null = await User.findOne({ _id });
+        const user: IUser | null = await User.findOne({ _id }).select(
+            '-password'
+        );
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
