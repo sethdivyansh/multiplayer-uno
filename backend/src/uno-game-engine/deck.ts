@@ -85,10 +85,15 @@ export function makeCard(
     value: CardValue
 ): UNOCard {
     const id = `card-${type}-${color}-${value}`;
-
-    if (!sameCardCount[id]) sameCardCount[id] = 0;
+    if (
+        !sameCardCount[id] ||
+        value === '0' ||
+        (type !== 'wild' && sameCardCount[id] === 2) ||
+        (type === 'wild' && sameCardCount[id] === 4)
+    ) {
+        sameCardCount[id] = 0;
+    }
     sameCardCount[id]++; // increment the count of same cards to assign unique id
-
     const uid = `${id}-${sameCardCount[id]}`;
     return { type, color, value, id: uid };
 }
